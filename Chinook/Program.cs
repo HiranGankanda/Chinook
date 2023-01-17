@@ -1,5 +1,7 @@
 using Chinook;
 using Chinook.Areas.Identity;
+using Chinook.DAL.Artist;
+using Chinook.DAL.Playlist;
 using Chinook.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,12 @@ builder.Services.AddDefaultIdentity<ChinookUser>(options => options.SignIn.Requi
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+#region Dependency Injection
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ChinookUser>>();
+
+builder.Services.AddTransient<IArtistDAL, ArtistDAL>();
+builder.Services.AddTransient<IPlaylistDAL, PlaylistDAL>();
+#endregion
 
 var app = builder.Build();
 

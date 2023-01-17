@@ -1,4 +1,4 @@
-﻿namespace Chinook.DAL.Artistx
+﻿namespace Chinook.DAL.Artist
 {
     public interface IArtistDAL
     {

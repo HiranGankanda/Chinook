@@ -1,4 +1,4 @@
-﻿using Chinook.DAL.Artistx;
+﻿using Chinook.DAL.Artist;
 using Chinook.Models;
 using Microsoft.EntityFrameworkCore;
 
