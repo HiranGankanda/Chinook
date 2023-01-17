@@ -1,10 +1,13 @@
 ﻿@page "/artist/{ArtistId:long}"
 @attribute [Authorize]
 
+@using Chinook.DAL.Artist;
+@using Chinook.DAL.Playlist;
 @using Chinook.Models
 @using Chinook.ClientModels
 @using Microsoft.EntityFrameworkCore
 @using System.Security.Claims;
+@inject IArtistDAL _artist;
 
 @if (!string.IsNullOrWhiteSpace(InfoMessage))
 {
@@ -63,7 +66,7 @@ else
     [Inject] IDbContextFactory<ChinookContext> DbFactory { get; set; }
     private Modal PlaylistDialog { get; set; }
 
-    private Artist Artist;
+    private Artist? Artist;
     private List<PlaylistTrack> Tracks;
     private DbContext DbContext;
     private PlaylistTrack SelectedTrack;
@@ -76,8 +79,11 @@ else
         CurrentUserId = await GetUserId();
         var DbContext = await DbFactory.CreateDbContextAsync();
 
-        Artist = DbContext.Artists.SingleOrDefault(a => a.ArtistId == ArtistId);
+        Artist = await _artist.GetArtistById(ArtistId);
 
+        //need to create interface call for get tracks list from artist id
+
+        //Tracks = await _artist.GetTracksOfGivenArtist(ArtistId);
         Tracks = DbContext.Tracks.Where(a => a.Album.ArtistId == ArtistId)
             .Include(a => a.Album)
             .Select(t => new PlaylistTrack()
