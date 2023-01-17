@@ -1,6 +1,9 @@
-﻿namespace Chinook.DAL.Artist
+﻿namespace Chinook.DAL.Artistx
 {
-    public class IArtistDAL
+    public interface IArtistDAL
     {
+        Task<Models.Artist?> GetArtistById(long artistId);
+        Task<List<Models.Artist>> GetArtistsByName(string artistName);
+        Task<List<Models.Artist>> GetAllArtists();
     }
 }
